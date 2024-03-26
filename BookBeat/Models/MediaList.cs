@@ -24,6 +24,13 @@ namespace BookBeat.Models
             // for already discoverd/explored list
             public bool IsAlreadyHeardOrRead { get; set; }
 
-        
+            // userid which is foregin key from aspnetuser table
+            [ForeignKey("User")]
+            public string UserID { get; set; }
+            public virtual ApplicationUser User { get; set; }
+
+            
+
+
     }
 }

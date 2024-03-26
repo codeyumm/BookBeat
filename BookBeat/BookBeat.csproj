@@ -191,6 +191,10 @@
     <Compile Include="Migrations\202403260206142_Register.Designer.cs">
       <DependentUpon>202403260206142_Register.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403260253073_aspnetusertable_foriegnkey.cs" />
+    <Compile Include="Migrations\202403260253073_aspnetusertable_foriegnkey.Designer.cs">
+      <DependentUpon>202403260253073_aspnetusertable_foriegnkey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -306,6 +310,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202403260206142_Register.resx">
       <DependentUpon>202403260206142_Register.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403260253073_aspnetusertable_foriegnkey.resx">
+      <DependentUpon>202403260253073_aspnetusertable_foriegnkey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

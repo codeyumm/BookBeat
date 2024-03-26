@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+
 namespace BookBeat.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -25,6 +26,14 @@ namespace BookBeat.Models
         {
         }
 
+        // Tables
+        public DbSet<Book> Books { get; set; }
+
+        public DbSet<Track> Tracks  { get; set; }
+
+        public DbSet<MediaList> MediaLists { get; set; }
+
+    
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
