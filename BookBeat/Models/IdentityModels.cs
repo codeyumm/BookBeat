@@ -32,6 +32,9 @@ namespace BookBeat.Models
         public DbSet<Track> Tracks  { get; set; }
 
         public DbSet<MediaList> MediaLists { get; set; }
+         
+        public DbSet<Review> Reviews { get; set; } 
+
 
     
         public static ApplicationDbContext Create()
