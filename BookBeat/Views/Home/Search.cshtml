@@ -1,92 +1,92 @@
-﻿﻿@model List<BookBeat.Models.Track>
-
+﻿@model BookBeat.Models.ViewModels.HomeMedia
 @{
     ViewBag.Title = "Home";
     var userId = Session["userId"];
     var test = ViewBag.userId;
 }
 
-
-
 <div class="container">
-
     <div class="row">
-
         <div class="col d-flex justify-content-center align-items-center">
-
             <form class="form-inline my-2 my-lg-0 d-flex" method="GET" action="/Home/TrackSearch">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchQuery">
                 <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
             </form>
-
         </div>
-
     </div>
 
-
+    <!-- Tracks section -->
     <div class="row flex justify-content-center align-items-center">
-
-
-        @foreach (var track in Model)
+        @foreach (var track in Model.tracks)
         {
+            <!-- Track card -->
             <div class="card mx-4 my-4 p-4" style="width: 18rem;">
                 <img src="@track.AlbumArt" class="card-img-top" alt="Album art image">
-
                 <div class="card-body">
-
-
-
-
-
-
-                    <h5 class="card-title">@track.Title </h5>
-                    <h5 class="card-title">by @track.Artist </h5>
-
-
+                    <h5 class="card-title">@track.Title</h5>
+                    <h5 class="card-title">by @track.Artist</h5>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-
+                    <!-- Form to add track to Listen Later list -->
                     <form method="POST" action="/TrackList/AddToListenLater">
                         <input type="hidden" name="userId" value="@userId" />
                         <input type="hidden" name="trackId" value="3" />
-
-
-
                         <input type="hidden" name="Title" value="@track.Title" />
                         <input type="hidden" name="Album" value="@track.Album" />
                         <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
                         <input type="hidden" name="Artist" value="@track.Artist" />
-
-
                         <input class="btn custom-btn" type="submit" value="Listen later" />
-
                     </form>
-
+                    <!-- Form to add track to Discovered list -->
                     <form method="POST" action="/TrackList/AddToDiscoverdList">
-
                         <input type="hidden" name="userId" value="@userId" />
                         <input type="hidden" name="trackId" value="3" />
-
-
                         <input type="hidden" name="Title" value="@track.Title" />
                         <input type="hidden" name="Album" value="@track.Album" />
                         <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
                         <input type="hidden" name="Artist" value="@track.Artist" />
-
-                        <input class="btn custom-btn" type="submit" value="Discoverd" />
-
+                        <input class="btn custom-btn" type="submit" value="Discovered" />
                     </form>
-
                 </div>
-
             </div>
-
         }
+    </div>
 
+    <!-- Books section -->
+    <div class="row flex justify-content-center align-items-center">
+        @foreach (var book in Model.books)
+        {
+            <!-- Book card -->
+            <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+                
+                <img src="@book.CoverImageURL" class="card-img-top" alt="Book cover image">
+                <div class="card-body">
+                    
+                    <h5 class="card-title">@book.Title</h5>
+                    <h5 class="card-title">by @book.Author</h5>
+                </div>
+                <div class="card-footer">
+              
+                    <form method="POST" action="/BookList/AddToReadLater">
+                        <input type="hidden" name="userId" value="@userId" />
+                          @*<input type="hidden" name="bookId" value="@book.Id" />*@ 
+                        <input type="hidden" name="Title" value="@book.Title" />
+                        <input type="hidden" name="Author" value="@book.Author" />
+                        <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
+                        <button class="btn custom-btn" type="submit">Read later</button>
+                    </form>
+            
+                    <form method="POST" action="/BookList/AddToDiscovered">
+                        <input type="hidden" name="userId" value="@userId" />
+                        @*<input type="hidden" name="bookId" value="@book.Id" />*@
+                        <input type="hidden" name="Title" value="@book.Title" />
+                        <input type="hidden" name="Author" value="@book.Author" />
+                        <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
+                        <button class="btn custom-btn" type="submit">Discovered</button>
+                    </form>
+                </div>
+            </div>
+        }
     </div>
 
 </div>
-
-
-
-
