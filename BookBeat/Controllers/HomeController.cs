@@ -141,10 +141,11 @@ namespace BookBeat.Controllers
                     Method = HttpMethod.Get,
                     RequestUri = new Uri(bookUrl),
                     Headers =
-        {
-            { "X-RapidAPI-Key", "92cd5fcfa4mshd97d398e5b8c2d3p1b650cjsn6c18a16505b8" },
-            { "X-RapidAPI-Host", "books-api7.p.rapidapi.com" },
-        },
+                {
+                    { "X-RapidAPI-Key", "92cd5fcfa4mshd97d398e5b8c2d3p1b650cjsn6c18a16505b8" },
+                    { "X-RapidAPI-Host", "books-api7.p.rapidapi.com" },
+                },
+                
                 };
 
                 HttpResponseMessage bookResponse = await client.SendAsync(bookRequest);
@@ -182,46 +183,37 @@ namespace BookBeat.Controllers
         // GET - localhost:44387/home/tracksearch
         // to handle user search for a track
 
-        public async Task<ActionResult> TrackSearch(string searchQuery)
+        public async Task<ActionResult> MediaSearch(string searchQuery)
         {
-           
             string searchString = searchQuery;
 
-            
+ 
             HttpClient client = new HttpClient();
 
             // API URL for music search
             string musicUrl = $"https://api.deezer.com/search?q={searchString}";
 
-            // API URL for book search
-            string bookUrl = $"https://books-api7.p.rapidapi.com/books/find/title?title={searchString}";
+            // API URL for Google Books search
+            string bookUrl = $"https://www.googleapis.com/books/v1/volumes?q={HttpUtility.UrlEncode(searchString)}";
 
-            Debug.WriteLine(bookUrl);
-
-            // Empty list of tracks
+            
             List<Track> tracks = new List<Track>();
 
-            // Empty list of books
+          
             List<Book> books = new List<Book>();
 
-           
+            
             HttpResponseMessage musicResponse = await client.GetAsync(musicUrl);
 
-            // Check if music response was successful
             if (musicResponse.IsSuccessStatusCode)
             {
-                // Store data as string
                 var musicJson = await musicResponse.Content.ReadAsStringAsync();
-
-                // Convert string into JSON
                 JObject musicData = JObject.Parse(musicJson);
-
-                // Get data which is inside the JSON array
                 JArray musicTracks = (JArray)musicData["data"];
 
+                // Iterate over music tracks and add to list
                 foreach (var trackItem in musicTracks)
                 {
-                    // Extract track information and add to track list
                     string title = trackItem["title"].ToString();
                     string artist = trackItem["artist"]["name"].ToString();
                     string albumArt = trackItem["album"]["cover_big"].ToString();
@@ -235,46 +227,41 @@ namespace BookBeat.Controllers
                 }
             }
 
-            HttpRequestMessage bookRequest = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(bookUrl),
-                Headers =
-            {
-                { "X-RapidAPI-Key", "92cd5fcfa4mshd97d398e5b8c2d3p1b650cjsn6c18a16505b8" },
-                { "X-RapidAPI-Host", "books-api7.p.rapidapi.com" },
-            },
-                };
-
-            HttpResponseMessage bookResponse = await client.SendAsync(bookRequest);
-
+            // Fetch books from Google Books API
+            HttpResponseMessage bookResponse = await client.GetAsync(bookUrl);
 
             if (bookResponse.IsSuccessStatusCode)
             {
                 var bookJson = await bookResponse.Content.ReadAsStringAsync();
+                JObject bookData = JObject.Parse(bookJson);
 
-                
-                JArray bookArray = JArray.Parse(bookJson);
+                JArray items = (JArray)bookData["items"];
 
-                Debug.WriteLine(bookArray);
-
-                foreach (var bookItem in bookArray)
+               
+                foreach (var item in items)
                 {
-                    
-                    string title = bookItem["title"].ToString();
-                    string author = bookItem["author"]["first_name"].ToString() + " " + bookItem["author"]["last_name"].ToString();
-                    string coverUrl = bookItem["cover"].ToString();
+                    var volumeInfo = item["volumeInfo"];
+                    string title = volumeInfo["title"].ToString();
+
+                    // api is givng array of authors converting array of object into string of array
+                    string[] authorArray = volumeInfo["authors"]?.ToObject<string[]>();
+                    // if array is not null join author array by ","
+
+                    string authors = authorArray != null ? string.Join(", ", authorArray) : "";
+
+
+                    string coverUrl = volumeInfo["imageLinks"]?["thumbnail"]?.ToString();
 
                     books.Add(new Book
                     {
                         Title = title,
-                        Author = author,
+                        Author = authors,
                         CoverImageURL = coverUrl
                     });
                 }
             }
 
-
+            // Create ViewModel with tracks and books
             HomeMedia viewModel = new HomeMedia
             {
                 tracks = tracks,
@@ -283,6 +270,7 @@ namespace BookBeat.Controllers
 
             return View(viewModel);
         }
+
 
 
 

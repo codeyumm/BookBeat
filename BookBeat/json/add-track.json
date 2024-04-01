@@ -1,0 +1,13 @@
+{
+
+  "Title": "Sinister Flows",
+  "Artist": "Seedhe Maut",
+  "Album": "Lyrical Mayhem",
+  "ReleaseDate": "2023-07-01T00:00:00Z",
+  "AlbumArt": "https://dummyimage.com/300"
+
+}
+
+
+// go to the path, open cmd, execute below command
+// curl -H "Content-Type:application/json" -d @track.json https://localhost:44387/api/trackdata/addtrack

@@ -11,7 +11,9 @@
 
 <div class="container">
 
-    <div class="row">
+
+
+    <div class="row mt-4">
         <div class="col d-flex justify-content-center align-items-center">
             <form class="form-inline my-2 my-lg-0 d-flex" method="GET" action="/Home/TrackSearch">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchQuery">
@@ -20,20 +22,66 @@
         </div>
     </div>
 
+
+
+    <div class="row flex justify-content-center align-items-center">
+
+        <h2>Books</h2>
+
+
+        @foreach (var book in Model.books)
+        {
+            <!-- Book card -->
+            <div class="card mx-4 my-4 p-4" style="width: 20rem;">
+                <!-- Book cover image -->
+                <img src="@book.CoverImageURL" class="card-img-top" alt="Book cover image">
+                <div class="card-body">
+                    <!-- Book title and author -->
+                    <h5 class="card-title">@book.Title</h5>
+                    <h5 class="card-title">by @book.Author</h5>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+
+                    <form method="POST" action="/BookList/AddToReadLater">
+                        <input type="hidden" name="userId" value="@userId" />
+                        @*<input type="hidden" name="bookId" value="@book.Id" />*@
+                        <input type="hidden" name="Title" value="@book.Title" />
+                        <input type="hidden" name="Author" value="@book.Author" />
+                        <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
+                        <button class="btn custom-btn" type="submit">Read later</button>
+                    </form>
+
+                    <form method="POST" action="/BookList/AddToDiscovered">
+                        <input type="hidden" name="userId" value="@userId" />
+                        @*<input type="hidden" name="bookId" value="@book.Id" />*@
+                        <input type="hidden" name="Title" value="@book.Title" />
+                        <input type="hidden" name="Author" value="@book.Author" />
+                        <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
+                        <button class="btn custom-btn" type="submit">Discovered</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+
+
+
+    <h2 class="mt-4">Tracks</h2>
+
     <div class="row flex justify-content-center align-items-center">
         @foreach (var track in Model.tracks)
         {
-           
-            <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+
+            <div class="card mx-4 my-4 p-4" style="width: 20rem;">
                 <img src="@track.AlbumArt" class="card-img-top" alt="Album art image">
                 <div class="card-body">
                     <h5 class="card-title">@track.Title</h5>
                     <h5 class="card-title">by @track.Artist</h5>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                   
+
                     <form method="POST" action="/TrackList/AddToListenLater">
-                        <
+
                         <input type="hidden" name="userId" value="@userId" />
                         <input type="hidden" name="trackId" value="2" />
                         <input type="hidden" name="Title" value="@track.Title" />
@@ -42,9 +90,9 @@
                         <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
                         <input class="btn custom-btn" type="submit" value="Listen later" />
                     </form>
-                    
+
                     <form method="POST" action="/TrackList/AddToDiscoverdList">
-                       
+
                         <input type="hidden" name="userId" value="@userId" />
                         <input type="hidden" name="trackId" value="2" />
                         <input type="hidden" name="Title" value="@track.Title" />
@@ -58,23 +106,4 @@
         }
     </div>
 
-   
-    <div class="row flex justify-content-center align-items-center">
-        @foreach (var book in Model.books)
-        {
-            <!-- Book card -->
-            <div class="card mx-4 my-4 p-4" style="width: 18rem;">
-                <!-- Book cover image -->
-                <img src="@book.CoverImageURL" class="card-img-top" alt="Book cover image">
-                <div class="card-body">
-                    <!-- Book title and author -->
-                    <h5 class="card-title">@book.Title</h5>
-                    <h5 class="card-title">by @book.Author</h5>
-                </div>
-                <div class="card-footer">
-                    <!-- Add more actions/buttons for books if needed -->
-                </div>
-            </div>
-        }
-    </div>
 </div>
