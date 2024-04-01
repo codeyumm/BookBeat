@@ -1,0 +1,92 @@
+﻿﻿@model List<BookBeat.Models.Track>
+
+@{
+    ViewBag.Title = "Home";
+    var userId = Session["userId"];
+    var test = ViewBag.userId;
+}
+
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col d-flex justify-content-center align-items-center">
+
+            <form class="form-inline my-2 my-lg-0 d-flex" method="GET" action="/Home/TrackSearch">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchQuery">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="row flex justify-content-center align-items-center">
+
+
+        @foreach (var track in Model)
+        {
+            <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+                <img src="@track.AlbumArt" class="card-img-top" alt="Album art image">
+
+                <div class="card-body">
+
+
+
+
+
+
+                    <h5 class="card-title">@track.Title </h5>
+                    <h5 class="card-title">by @track.Artist </h5>
+
+
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+
+                    <form method="POST" action="/TrackList/AddToListenLater">
+                        <input type="hidden" name="userId" value="@userId" />
+                        <input type="hidden" name="trackId" value="3" />
+
+
+
+                        <input type="hidden" name="Title" value="@track.Title" />
+                        <input type="hidden" name="Album" value="@track.Album" />
+                        <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                        <input type="hidden" name="Artist" value="@track.Artist" />
+
+
+                        <input class="btn custom-btn" type="submit" value="Listen later" />
+
+                    </form>
+
+                    <form method="POST" action="/TrackList/AddToDiscoverdList">
+
+                        <input type="hidden" name="userId" value="@userId" />
+                        <input type="hidden" name="trackId" value="3" />
+
+
+                        <input type="hidden" name="Title" value="@track.Title" />
+                        <input type="hidden" name="Album" value="@track.Album" />
+                        <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                        <input type="hidden" name="Artist" value="@track.Artist" />
+
+                        <input class="btn custom-btn" type="submit" value="Discoverd" />
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>
+
+
+
+

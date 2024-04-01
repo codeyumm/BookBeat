@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TrackDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,6 +200,10 @@
     <Compile Include="Migrations\202403260318389_fkey.Designer.cs">
       <DependentUpon>202403260318389_fkey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404010046346_first.cs" />
+    <Compile Include="Migrations\202404010046346_first.Designer.cs">
+      <DependentUpon>202404010046346_first.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -207,6 +212,7 @@
     <Compile Include="Models\MediaList.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\VIewModels\HomeMedia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -281,6 +287,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\TrackSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -321,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403260318389_fkey.resx">
       <DependentUpon>202403260318389_fkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404010046346_first.resx">
+      <DependentUpon>202404010046346_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
