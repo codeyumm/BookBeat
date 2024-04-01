@@ -4,16 +4,57 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+
 
 namespace BookBeat.Controllers
 {
     public class HomeController : Controller
     {
+
+        private static readonly HttpClient client;
+
+        static HomeController()
+        {
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
+            client.BaseAddress = new Uri("https://localhost:44324/api/");
+
+        }
+
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            //HTTP client is set up to be reused, otherwise it will exhaust server resources.
+            //This is a bit dangerous because a previously authenticated cookie could be cached for
+            //a follow-up request from someone else. Reset cookies in HTTP client before grabbing a new one.
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            //collect token as it is submitted to the controller
+            //use it to pass along to the WebAPI.
+            Debug.WriteLine("Token Submitted is : " + token);
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+
+
+
         public ActionResult Index()
         {
             return View();
@@ -40,6 +81,21 @@ namespace BookBeat.Controllers
         // GET - Home/Search
         public async Task<ActionResult> Search()
         {
+
+
+            GetApplicationCookie();
+
+            var userId = User.Identity.GetUserId();
+
+            // get owin context to use apis to get info about users
+            var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            // get info of current user
+            var currentUser = await userManager.FindByIdAsync(userId);
+
+
+            Debug.WriteLine("user id --- " + userId);
+
 
             // get viewmodel
             HomeMedia ViewModel = new HomeMedia();
@@ -140,6 +196,8 @@ namespace BookBeat.Controllers
             // API URL for book search
             string bookUrl = $"https://books-api7.p.rapidapi.com/books/find/title?title={searchString}";
 
+            Debug.WriteLine(bookUrl);
+
             // Empty list of tracks
             List<Track> tracks = new List<Track>();
 
@@ -177,22 +235,32 @@ namespace BookBeat.Controllers
                 }
             }
 
-           
-            HttpResponseMessage bookResponse = await client.GetAsync(bookUrl);
+            HttpRequestMessage bookRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(bookUrl),
+                Headers =
+            {
+                { "X-RapidAPI-Key", "92cd5fcfa4mshd97d398e5b8c2d3p1b650cjsn6c18a16505b8" },
+                { "X-RapidAPI-Host", "books-api7.p.rapidapi.com" },
+            },
+                };
 
-            
+            HttpResponseMessage bookResponse = await client.SendAsync(bookRequest);
+
+
             if (bookResponse.IsSuccessStatusCode)
             {
-             
                 var bookJson = await bookResponse.Content.ReadAsStringAsync();
 
                 
-                JObject bookData = JObject.Parse(bookJson);
-                JArray bookArray = (JArray)bookData["data"];
+                JArray bookArray = JArray.Parse(bookJson);
+
+                Debug.WriteLine(bookArray);
 
                 foreach (var bookItem in bookArray)
                 {
-                    // get book info to store in model
+                    
                     string title = bookItem["title"].ToString();
                     string author = bookItem["author"]["first_name"].ToString() + " " + bookItem["author"]["last_name"].ToString();
                     string coverUrl = bookItem["cover"].ToString();
@@ -206,7 +274,7 @@ namespace BookBeat.Controllers
                 }
             }
 
-            // set view models
+
             HomeMedia viewModel = new HomeMedia
             {
                 tracks = tracks,
