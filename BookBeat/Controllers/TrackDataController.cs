@@ -15,10 +15,10 @@ namespace BookBeat.Controllers
 {
     public class TrackDataController : ApiController
     {
-        // get database context
+        /// get database context/
         public ApplicationDbContext db = new ApplicationDbContext();
 
-        // Add Track
+        /// Add Track
         [HttpPost]
         [ResponseType(typeof(Track))]
         [Route("api/TrackData/AddTrack")]
@@ -172,7 +172,43 @@ namespace BookBeat.Controllers
         }
 
 
+        /// <summary>
+        /// Returns all tracks in database
+        /// </summary>
+        /// 
+        /// <returns>
+        /// HTTP 200 (OK) with the following content:
+        /// - A list of tracks
+        /// </returns>
+        /// 
+        /// <example>
+        /// GET: https://localhost:44387/api/TrackData/ListTracks
+        /// Response: [{"Id":1,"Title":"Sinister Flows"},
+        ///             {"Id":2,"Title":"Gravitational Pull"...]
+        /// </example>
 
+        /// Display Tracks
 
+        [HttpGet]
+        [Route("api/TrackData/ListTracks")]
+        public List<TrackDTO> ListTracks()
+        {
+
+            List<Track> Tracks = db.Tracks.ToList();
+
+            List<TrackDTO> TrackDtos = new List<TrackDTO>();
+            Tracks.ForEach(track =>
+            {
+
+                TrackDtos.Add(new TrackDTO()
+                {
+                    Id = track.Id,
+                    Title = track.Title,
+
+                }); ;
+            });
+
+            return TrackDtos;
+        }
     }
 }
