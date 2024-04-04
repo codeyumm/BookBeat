@@ -40,4 +40,23 @@ namespace BookBeat.Models
 
            
     }
+
+    public class TrackListDTO
+    {
+        public int Id { get; set; }
+
+        public int TrackID { get; set; }
+
+        public string Title { get; set; }
+
+        public string UserName { get; set; }
+
+        public string UserID { get; set; }
+
+        public string Artist { get; set; }
+
+        public string Album { get; set; }
+
+        public string AlbumArt { get; set; }
+    }
 }
