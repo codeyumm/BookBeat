@@ -40,10 +40,14 @@ namespace BookBeat.Controllers
         // add that song to listen later list
 
         [HttpPost]
-        [Route("api/TrackListData/AddToListenLaterList/{userId}/{trackId}")]
+        [Route("api/MediaListData/AddTrackToListenLaterList/{userId}/{trackId}")]
 
-        public IHttpActionResult AddToLIstenLaterList(string userId, int trackId)
+        public IHttpActionResult AddTrackToListenLaterList(string userId, int trackId)
         {
+
+            Debug.WriteLine(" got user id : " + userId);
+            Debug.WriteLine(" got track id : " + trackId);
+
 
             // check track with trackId from request exist or not
             // get track with trackId
@@ -86,11 +90,14 @@ namespace BookBeat.Controllers
                     medialist.TrackID = trackId;
                     medialist.IsAlreadyHeardOrRead = false;
                     medialist.IsAddedLater = true;
+                    medialist.MediaType = "track";
 
                     db.MediaLists.Add(medialist);
                     db.SaveChanges();
 
                     Debug.WriteLine("Tried to adding in database");
+                    return Ok("Track Added to listen later list of user");
+
 
                 }
                 else if (isInDiscoverdList) // if track is in discoverd list
@@ -105,6 +112,8 @@ namespace BookBeat.Controllers
                     // update in database
                     db.Entry(medialist).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    return Ok("Track Added to listen later list of user");
 
                 }
                 else if (isAlreadyAdded)
@@ -123,5 +132,102 @@ namespace BookBeat.Controllers
 
         }
 
+
+        /// <summary>
+        /// Adds a book to listen later list of user
+        /// </summary>
+        /// 
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// </returns>
+        /// 
+        /// <param name="bookId">ID OF BOOK</param>
+        /// <param name="userId">ID OF USER from asp net user table</param>
+        /// <example>
+        /// POST: curl -H "Content-Type:application/json" -d @readLater.json https://api/MediaListData/AddBookToListenLaterList/{userId}/{bookId}
+        /// response: Ok
+        /// </example> 
+
+
+
+        [HttpPost]
+        [Route("api/MediaListData/AddBookToReadLaterList/{userId}/{bookId}")]
+        public IHttpActionResult AddBookToReadLaterList(string userId, int bookId)
+        {
+            Debug.WriteLine("Got user id: " + userId);
+            Debug.WriteLine("Got book id: " + bookId);
+
+            // Check if the book with bookId exists
+            bool isBookExist = (db.Books.Where(b => b.BookID == bookId).Count() == 1);
+
+            // Check if the user already has the book in their listen later list
+            bool isAlreadyAdded = (db.MediaLists.Where(b => b.BookID == bookId)
+                                                .Where(u => u.UserID == userId)
+                                                .Count() == 1);
+
+            // Check if the user already has the book in their discovered list
+            bool isInDiscoveredList = (db.MediaLists.Where(b => b.BookID == bookId)
+                                                     .Where(u => u.UserID == userId)
+                                                     .Where(m => m.IsAlreadyHeardOrRead)
+                                                     .Count() == 1);
+
+            if (isBookExist)
+            {
+                Debug.WriteLine("Given book exists in the database");
+
+                if (!isAlreadyAdded && !isInDiscoveredList) // Book is not in listen later or discovered list
+                {
+                    MediaList mediaList = new MediaList
+                    {
+                        UserID = userId,
+                        BookID = bookId,
+                        IsAlreadyHeardOrRead = false,
+                        IsAddedLater = true,
+                        MediaType = "book"
+                    };
+
+                    db.MediaLists.Add(mediaList);
+                    db.SaveChanges();
+
+                    return Ok("Book added to listen later list of the user");
+                }
+                else if (isInDiscoveredList) // Book is in discovered list
+                {
+                    MediaList mediaList = db.MediaLists.Where(b => b.UserID == userId)
+                                                       .Where(b => b.BookID == bookId)
+                                                       .SingleOrDefault();
+
+                    mediaList.IsAlreadyHeardOrRead = false;
+                    mediaList.IsAddedLater = true;
+
+                    db.Entry(mediaList).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Ok("Book added to listen later list of the user");
+                }
+                else if (isAlreadyAdded) // Book is already in listen later list
+                {
+                    return BadRequest("Book is already in the listen later list");
+                }
+            }
+            else
+            {
+                Debug.Write("The book does not exist in the database");
+                return BadRequest("The book does not exist in the database");
+            }
+
+            Debug.Write("There was some error");
+            return BadRequest("There was some error");
+        }
+
     }
+
+
+
+
 }
+
+
+
+
+
