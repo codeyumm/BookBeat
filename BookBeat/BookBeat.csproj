@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MediaListController.cs" />
     <Compile Include="Controllers\MediaListDataController.cs" />
     <Compile Include="Controllers\TrackDataController.cs" />
     <Compile Include="Global.asax.cs">
@@ -294,6 +295,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\MediaListData\" />
+    <Folder Include="Views\MediaList\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -42,18 +42,18 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
 
-                    <form method="POST" action="/BookList/AddToReadLater">
+                    <form method="POST" action="/MediaList/AddToLaterList">
                         <input type="hidden" name="userId" value="@userId" />
-                        @*<input type="hidden" name="bookId" value="@book.Id" />*@
+                       *<input type="hidden" name="mediaId" value="2" />
                         <input type="hidden" name="Title" value="@book.Title" />
                         <input type="hidden" name="Author" value="@book.Author" />
                         <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
                         <button class="btn custom-btn" type="submit">Read later</button>
                     </form>
 
-                    <form method="POST" action="/BookList/AddToDiscovered">
+                    <form method="POST" action="/MediaList/AddToDiscovered">
                         <input type="hidden" name="userId" value="@userId" />
-                        @*<input type="hidden" name="bookId" value="@book.Id" />*@
+                        <input type="hidden" name="mediaId" value="2" />
                         <input type="hidden" name="Title" value="@book.Title" />
                         <input type="hidden" name="Author" value="@book.Author" />
                         <input type="hidden" name="CoverImageURL" value="@book.CoverImageURL" />
@@ -80,10 +80,10 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between">
 
-                    <form method="POST" action="/TrackList/AddToListenLater">
+                    <form method="POST" action="/MediaList/AddToLaterList">
 
                         <input type="hidden" name="userId" value="@userId" />
-                        <input type="hidden" name="trackId" value="2" />
+                        <input type="hidden" name="mediaId" value="2" />
                         <input type="hidden" name="Title" value="@track.Title" />
                         <input type="hidden" name="Artist" value="@track.Artist" />
                         <input type="hidden" name="Album" value="@track.Album" />
@@ -91,10 +91,10 @@
                         <input class="btn custom-btn" type="submit" value="Listen later" />
                     </form>
 
-                    <form method="POST" action="/TrackList/AddToDiscoverdList">
+                    <form method="POST" action="/MediaList/AddToDiscoverdList">
 
                         <input type="hidden" name="userId" value="@userId" />
-                        <input type="hidden" name="trackId" value="2" />
+                        <input type="hidden" name="mediaId" value="2" />
                         <input type="hidden" name="Title" value="@track.Title" />
                         <input type="hidden" name="Artist" value="@track.Artist" />
                         <input type="hidden" name="Album" value="@track.Album" />

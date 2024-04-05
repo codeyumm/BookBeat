@@ -59,4 +59,16 @@ namespace BookBeat.Models
 
         public string AlbumArt { get; set; }
     }
+
+    public class BookListDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string UserName { get; set; }
+        public string Author { get; set; }
+        public string UserID { get; set; }
+        public int BookID { get; set; }
+        public string Genre { get; set; }
+        public string CoverImage { get; set; }
+    }
 }
