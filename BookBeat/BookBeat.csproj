@@ -293,6 +293,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\MediaSearch.cshtml" />
     <Content Include="Views\MediaList\ListenLater.cshtml" />
+    <Content Include="Views\MediaList\DiscoveredList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

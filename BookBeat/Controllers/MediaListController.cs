@@ -192,7 +192,7 @@ namespace BookBeat.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Discovered");
+                    return RedirectToAction("DiscoveredList");
                 }
                 else
                 {
@@ -208,29 +208,67 @@ namespace BookBeat.Controllers
 
         // GET: Media/ListenLater
         [HttpGet]
-        public ActionResult ListenLater(int id)
+        public ActionResult ListenLater()
         {
             LaterList laterList = new LaterList();
 
+            // get user id
+            var userId = User.Identity.GetUserId();
 
             // get music tracks for listen later list
-            HttpResponseMessage musicResponse = client.GetAsync($"TrackListData/GetListenLaterList/{id}").Result;
+            string url = $"MediaListData/GetListenLaterListOfTracks/{userId}";
+
+            HttpResponseMessage musicResponse = client.GetAsync(url).Result;
+            Debug.WriteLine(url);
+
             if (musicResponse.IsSuccessStatusCode)
             {
+                Debug.WriteLine("Hello");
                 laterList.Tracks = musicResponse.Content.ReadAsAsync<List<TrackListDTO>>().Result;
             }
             
 
             // get books for read later list
-            HttpResponseMessage bookResponse = client.GetAsync($"BookListData/GetListenLaterList/{id}").Result;
+            HttpResponseMessage bookResponse = client.GetAsync($"MediaListData/GetListenLaterList/{userId}").Result;
             if (bookResponse.IsSuccessStatusCode)
             {
                 laterList.Books = bookResponse.Content.ReadAsAsync<List<BookListDTO>>().Result;
             }
             
 
-            return View("ListenLater");
+            return View(laterList);
         }
+
+        // GET: Media/Discovered
+        [HttpGet]
+        public ActionResult DiscoveredList()
+        {
+            LaterList laterList = new LaterList();
+
+            // Get user id
+            var userId = User.Identity.GetUserId();
+
+            // Get discovered music tracks
+            string musicUrl = $"MediaListData/GetDiscoveredListOfTracks/{userId}";
+            HttpResponseMessage musicResponse = client.GetAsync(musicUrl).Result;
+
+            if (musicResponse.IsSuccessStatusCode)
+            {
+                laterList.Tracks = musicResponse.Content.ReadAsAsync<List<TrackListDTO>>().Result;
+            }
+
+            // Get discovered books
+            string bookUrl = $"MediaListData/GetDiscoveredListOfBooks/{userId}";
+            HttpResponseMessage bookResponse = client.GetAsync(bookUrl).Result;
+
+            if (bookResponse.IsSuccessStatusCode)
+            {
+                laterList.Books = bookResponse.Content.ReadAsAsync<List<BookListDTO>>().Result;
+            }
+
+            return View(laterList);
+        }
+
 
 
 

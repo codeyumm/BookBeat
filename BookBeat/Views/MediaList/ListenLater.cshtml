@@ -29,47 +29,76 @@
 }
 
 <section class="listen-later-list-container">
-    @if (Model.Tracks != null && Model.Tracks.Count > 0)
-    {
-        <div class="col-md-6">
-            <h1>Listen later list of @Model.Tracks.First().UserName (Music)</h1>
-            <div class="row flex justify-content-center align-items-center">
-                @foreach (var track in Model.Tracks)
-                {
-                    <div class="card mx-4 my-4 p-4" style="width: 18rem;">
-                        <!-- Music track details -->
-                    </div>
-                }
-            </div>
-        </div>
-    }
-
-    @if (Model.Books != null && Model.Books.Count > 0)
-    {
-        <div class="col-md-6">
-            <h1>Listen later list of @Model.Books.First().UserName (Books)</h1>
-            <div class="row flex justify-content-center align-items-center">
-                @foreach (var book in Model.Books)
-                {
-                    <div class="card mx-4 my-4 p-4" style="width: 18rem;">
-                        <!-- Book details -->
-                    </div>
-                }
-            </div>
-        </div>
-    }
-
-    @if (Model.Tracks == null || Model.Tracks.Count == 0)
+    @if (Model.Tracks == null)
     {
         <div class="col-md-6">
             <h1>You don't have any music tracks in the listen later list</h1>
         </div>
     }
+    else
+    {
+        <div class="col-md-12">
+            <h1>Listen later list of @Model.Tracks.First().UserName (Music)</h1>
+            <div class="row flex justify-content-center align-items-center">
+                @foreach (var track in Model.Tracks)
+                {
+                    <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+                        <img src="@track.AlbumArt" class="card-img-top" alt="Album art">
+                        <div class="card-body">
+                            <h5 class="card-title">@track.Title</h5>
+                            <p class="card-text">Artist: @track.Artist</p>
+                            <p class="card-text">Album: @track.Album</p>
+                        </div>
+                        <div class="card-footer">
+                            <form method="POST" action="/TrackList/AddToListenLater">
+                                <input type="hidden" name="userId" value="@track.UserID" />
+                                <input type="hidden" name="trackId" value="@track.TrackID" />
+                                <input type="hidden" name="Title" value="@track.Title" />
+                                <input type="hidden" name="Album" value="@track.Album" />
+                                <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                                <input type="hidden" name="Artist" value="@track.Artist" />
+                                <input class="btn custom-btn" type="submit" value="Listen later" />
+                            </form>
+                            <form method="POST" action="/TrackList/AddToDiscoverdList">
+                                <input type="hidden" name="userId" value="@track.UserID" />
+                                <input type="hidden" name="trackId" value="@track.TrackID" />
+                                <input type="hidden" name="Title" value="@track.Title" />
+                                <input type="hidden" name="Album" value="@track.Album" />
+                                <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                                <input type="hidden" name="Artist" value="@track.Artist" />
+                                <input class="btn custom-btn" type="submit" value="Discovered" />
+                            </form>
+                        </div>
+                    </div>
 
-    @if (Model.Books == null || Model.Books.Count == 0)
+                }
+            </div>
+        </div>
+    }
+
+
+    @if (Model.Books == null)
     {
         <div class="col-md-6">
             <h1>You don't have any books in the read later list</h1>
         </div>
     }
+    else
+    {
+    <div class="col-md-6">
+        <h1>Listen later list of @Model.Books.First().UserName (Books)</h1>
+        <div class="row flex justify-content-center align-items-center">
+            @foreach (var book in Model.Books)
+            {
+                <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+                    <!-- Book details -->
+                </div>
+            }
+        </div>
+    </div>
+    }
+
+
+
+
 </section>
