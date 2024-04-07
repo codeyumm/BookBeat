@@ -44,6 +44,16 @@ namespace BookBeat.Models
 
         public string Author { get; set; }
 
+        public string Genre { get; set; }
+
+        public int? PublicationYear { get; set; }
+
+        public string ISBN { get; set;}
+
+        public string Description { get; set; }
+
+        public string CoverImageURL { get; set; }
+
     
     }
 }
