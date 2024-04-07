@@ -215,6 +215,7 @@
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\ViewModels\HomeMedia.cs" />
+    <Compile Include="Models\ViewModels\LaterList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -291,11 +292,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\MediaSearch.cshtml" />
+    <Content Include="Views\MediaList\ListenLater.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MediaListData\" />
-    <Folder Include="Views\MediaList\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

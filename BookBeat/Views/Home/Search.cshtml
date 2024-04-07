@@ -38,7 +38,7 @@
                         <input class="btn custom-btn" type="submit" value="Listen later" />
                     </form>
                     <!-- Form to add track to Discovered list -->
-                    <form method="POST" action="/TrackList/AddToDiscoverdList">
+                    <form method="POST" action="/TrackList/AddToDiscoveredList">
                         <input type="hidden" name="userId" value="@userId" />
                         <input type="hidden" name="trackId" value="3" />
                         <input type="hidden" name="Title" value="@track.Title" />
@@ -76,7 +76,7 @@
                         <button class="btn custom-btn" type="submit">Read later</button>
                     </form>
             
-                    <form method="POST" action="/BookList/AddToDiscovered">
+                    <form method="POST" action="/BookList/AddToDiscoveredList">
                         <input type="hidden" name="userId" value="@userId" />
                         @*<input type="hidden" name="bookId" value="@book.Id" />*@
                         <input type="hidden" name="Title" value="@book.Title" />

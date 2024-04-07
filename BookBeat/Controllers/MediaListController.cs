@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Threading.Tasks;
 using System.Web.Http.Tracing;
+using BookBeat.Models.ViewModels;
 
 namespace BookBeat.Controllers
 {
@@ -29,7 +30,7 @@ namespace BookBeat.Controllers
             };
 
             client = new HttpClient(handler);
-            client.BaseAddress = new Uri("https://localhost:44324/api/");
+            client.BaseAddress = new Uri("https://localhost:44366/api/");
 
         }
 
@@ -97,7 +98,7 @@ namespace BookBeat.Controllers
 
             // send api request to add the track or book
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            var id = response.Content.ReadAsStringAsync().Result;
+            string id = response.Content.ReadAsStringAsync().Result;
 
             mediaId = Int32.Parse(id);
 
@@ -115,10 +116,11 @@ namespace BookBeat.Controllers
                     url = $"MediaListData/AddBookToReadLaterList/{userId}/{mediaId}";
                 }
 
-               
-                response = client.GetAsync(url).Result;
 
-            
+                HttpContent contentTwo = new StringContent(jsonPayload);
+                response = client.PostAsync(url, contentTwo).Result;
+
+
                 if (response.IsSuccessStatusCode)
                 {
                     
@@ -135,6 +137,102 @@ namespace BookBeat.Controllers
                 return View("Error");
             }
         }
+
+
+        [HttpPost]
+        public ActionResult AddToDiscoveredList(int mediaId, string mediaType, Book book, Track track)
+        {
+            // get user id
+            var userId = User.Identity.GetUserId();
+
+           
+            string jsonPayload = "";
+            string url = "";
+            bool isTrack = false;
+
+            if (mediaType == "track")
+            {
+                jsonPayload = jss.Serialize(track);
+                url = "trackdata/addtrack";
+                isTrack = true;
+            }
+            else
+            {
+                jsonPayload = jss.Serialize(book);
+                url = "bookdata/addbook";
+            }
+
+          
+            HttpContent content = new StringContent(jsonPayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+           
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            string id = response.Content.ReadAsStringAsync().Result;
+            
+
+            mediaId = Int32.Parse(id);
+
+       
+            if (response.IsSuccessStatusCode)
+            {
+                
+                if (isTrack)
+                {
+                    url = $"MediaListData/AddTrackToDiscoveredList/{userId}/{mediaId}";
+                }
+                else
+                {
+                    url = $"MediaListData/AddBookToReadLaterList/{userId}/{mediaId}";
+                }
+
+                HttpContent contentTwo = new StringContent(jsonPayload);
+                response = client.PostAsync(url, contentTwo).Result;
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Discovered");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+
+        // GET: Media/ListenLater
+        [HttpGet]
+        public ActionResult ListenLater(int id)
+        {
+            LaterList laterList = new LaterList();
+
+
+            // get music tracks for listen later list
+            HttpResponseMessage musicResponse = client.GetAsync($"TrackListData/GetListenLaterList/{id}").Result;
+            if (musicResponse.IsSuccessStatusCode)
+            {
+                laterList.Tracks = musicResponse.Content.ReadAsAsync<List<TrackListDTO>>().Result;
+            }
+            
+
+            // get books for read later list
+            HttpResponseMessage bookResponse = client.GetAsync($"BookListData/GetListenLaterList/{id}").Result;
+            if (bookResponse.IsSuccessStatusCode)
+            {
+                laterList.Books = bookResponse.Content.ReadAsAsync<List<BookListDTO>>().Result;
+            }
+            
+
+            return View("ListenLater");
+        }
+
+
 
     }
 }
