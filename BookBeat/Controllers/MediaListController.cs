@@ -272,5 +272,47 @@ namespace BookBeat.Controllers
 
 
 
+        // to remove media from listne later list
+        [HttpPost]
+        public ActionResult RemoveFromLaterList(int mediaId, string mediaType)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+
+            GetApplicationCookie();
+
+            var userId = User.Identity.GetUserId();
+
+            string url = "";
+         
+
+            if (mediaType == "track")
+            {
+                url = $"MediaListData/RemoveTrackFromListenLater/{userId}/{mediaId}";
+              
+            }
+            else
+            {
+                url = $"MediaListData/RemoveBookFromReadLater/{userId}/{mediaId}";
+            }
+
+            
+            HttpResponseMessage response = client.DeleteAsync(url).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+              
+                return RedirectToAction("ListenLater");
+            }
+            else
+            {
+                
+                return View("Error");
+            }
+        }
+
+
+
+
+
     }
 }

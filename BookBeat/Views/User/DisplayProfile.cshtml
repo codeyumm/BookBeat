@@ -1,0 +1,199 @@
+﻿@model BookBeat.Models.ViewModels.DetailsUser
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<section class="profile-container">
+
+    <div class="profile-card">
+
+        <!-- Image credit unsplash.com -->
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp" title="user-avatar" class="user-image" />
+
+        <div class="info">
+            <p>@Model.SelectedUser.UserName | @Model.SelectedUser.FirstName @Model.SelectedUser.LastName</p>
+        </div>
+
+        <div class="user-info">
+
+            <div class="reviews">
+                <p>Reviews</p>
+                @* <p>@Model.UserReviews.Count()</p>*@
+                <p>0</p>
+            </div>
+
+            <div class="listen-later">
+                <p>Listen Later</p>
+                <p>@Model.UserListenLaterList.Count()</p>
+            </div>
+
+            <div class="discoverd">
+                <p>Discovered</p>
+                <p>@Model.UserDiscoverdListOfTrack.Count()</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <h2> Music </h2>
+
+    <div class="track-list-container">
+
+
+        <div class="listen-later">
+            <h2>Listen later list</h2>
+
+            @{int counter = 0;}
+            @if (Model.UserListenLaterList.Count() == 0)
+            {
+                <h6>Your track listen later list is empty</h6>
+            }
+            else
+            {
+                foreach (var track in Model.UserListenLaterList)
+                {
+                    if (counter == 3)
+                    {
+                        break;
+                    };
+
+                    <div class="track-container">
+                        <h5>@track.Title</h5>
+                        <h6>by @track.Artist</h6>
+                    </div>
+
+                    counter++;
+                }
+
+                <form method="get" action="/MediaList/ListenLater">
+                    <input type="hidden" name="id" value="@Model.SelectedUser.UserName" />
+                    <input type="submit" value="See full list" />
+                </form>
+            }
+        </div>
+
+        <div class="discoverd">
+            <h2>Discovered list</h2>
+
+            @{counter = 0;}
+            @if (Model.UserDiscoverdListOfTrack.Count() == 0)
+            {
+                <h6>Your track discovered list is empty</h6>
+            }
+            else
+            {
+                foreach (var track in Model.UserDiscoverdListOfTrack)
+                {
+                    if (counter == 3)
+                    {
+                        break;
+                    };
+
+                    <div class="track-container">
+                        <h5>@track.Title</h5>
+                        <h6>by @track.Artist</h6>
+                    </div>
+
+                    counter++;
+                }
+
+                <form method="get" action="/MediaList/DiscoveredList">
+                    <input type="hidden" name="id" value="@Model.SelectedUser.UserName" />
+                    <input type="submit" value="See full list" />
+                </form>
+            }
+        </div>
+
+        @*  <div class="listen-later">
+                    <h2>Listen later list (Books)</h2>
+
+                    @{counter = 0;}
+                    @if (Model.UserReadLaterList.Count() == 0)
+                    {
+                        <h6>Your book listen later list is empty</h6>
+                    }
+                    else
+                    {
+                        foreach (var book in Model.UserReadLaterList)
+                        {
+                            if (counter == 3)
+                            {
+                                break;
+                            };
+
+                            <div class="book-container">
+                                <h5>@book.Title</h5>
+                                <h6>by @book.Author</h6>
+                            </div>
+
+                            counter++;
+                        }
+
+                        <form method="get" action="/BookList/ListenLater">
+                            <input type="hidden" name="id" value="@Model.SelectedUser.UserName" />
+                            <input type="submit" value="See full list" />
+                        </form>
+                    }
+                </div>
+
+                <div class="discoverd">
+                    <h2>Discovered list (Books)</h2>
+
+                    @{counter = 0;}
+                    @if (Model.UserDiscoverdListOfBook.Count() == 0)
+                    {
+                        <h6>Your book discovered list is empty</h6>
+                    }
+                    else
+                    {
+                        foreach (var book in Model.UserDiscoverdListOfBook)
+                        {
+                            if (counter == 3)
+                            {
+                                break;
+                            };
+
+                            <div class="book-container">
+                                <h5>@book.Title</h5>
+                                <h6>by @book.Author</h6>
+                            </div>
+
+                            counter++;
+                        }
+
+                        <form method="get" action="/BookList/Discoverd">
+                            <input type="hidden" name="id" value="@Model.SelectedUser.UserName" />
+                            <input type="submit" value="See full list" />
+                        </form>
+                    }
+                </div>
+            </div> *@
+
+        @*  <div class="reviews-container">
+                <h2>Reviews</h2>
+                @{counter = 0;}
+                @if (@Model.UserReviews.Count() == 0)
+                {
+                    <h6>Your list is empty</h6>
+                }
+                else
+                {
+                    <div class="wrapper">
+                        @foreach (var review in Model.UserReviews)
+                        {
+                            <div class="review-container">
+                                <h5>@review.Title for @review.TrackTitle</h5>
+                                <form method="get" action="/Review/Display">
+                                    <input type="hidden" name="userId" value="@Model.SelectedUser.Id" />
+                                    <input type="submit" value="See all" />
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+            </div> *@
+</section>
+
+

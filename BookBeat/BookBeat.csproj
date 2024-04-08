@@ -188,6 +188,7 @@
     <Compile Include="Controllers\MediaListController.cs" />
     <Compile Include="Controllers\MediaListDataController.cs" />
     <Compile Include="Controllers\TrackDataController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +207,7 @@
     <Compile Include="Models\Track.cs" />
     <Compile Include="Models\ViewModels\HomeMedia.cs" />
     <Compile Include="Models\ViewModels\LaterList.cs" />
+    <Compile Include="Models\ViewModels\UserDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -284,6 +286,7 @@
     <Content Include="Views\Home\MediaSearch.cshtml" />
     <Content Include="Views\MediaList\ListenLater.cshtml" />
     <Content Include="Views\MediaList\DiscoveredList.cshtml" />
+    <Content Include="Views\User\DisplayProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

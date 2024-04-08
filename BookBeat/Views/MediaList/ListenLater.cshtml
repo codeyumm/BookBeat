@@ -29,6 +29,13 @@
 }
 
 <section class="listen-later-list-container">
+
+
+    <form method="get" action="/User/DisplayProfile" class="btn-go-to-profile">
+        <input type="submit" value="Go to Profile" />
+    </form>
+
+
     @if (Model.Tracks == null)
     {
         <div class="col-md-6">
@@ -85,17 +92,17 @@
     }
     else
     {
-    <div class="col-md-6">
-        <h1>Listen later list of @Model.Books.First().UserName (Books)</h1>
-        <div class="row flex justify-content-center align-items-center">
-            @foreach (var book in Model.Books)
-            {
-                <div class="card mx-4 my-4 p-4" style="width: 18rem;">
-                    <!-- Book details -->
-                </div>
-            }
+        <div class="col-md-6">
+            <h1>Listen later list of @Model.Books.First().UserName (Books)</h1>
+            <div class="row flex justify-content-center align-items-center">
+                @foreach (var book in Model.Books)
+                {
+                    <div class="card mx-4 my-4 p-4" style="width: 18rem;">
+                        <!-- Book details -->
+                    </div>
+                }
+            </div>
         </div>
-    </div>
     }
 
 

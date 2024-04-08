@@ -2,9 +2,11 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 
 
@@ -20,33 +22,32 @@ namespace BookBeat.Controllers
 
         public IHttpActionResult GetProfileInfo(string id)
         {
-
-            // check if user exist or not
-            // get all info from users table except password
-
-            var userID = id;
-
-            ApplicationUser user = db.Users.Find(userID);
-
-            UserDTO userData = new UserDTO();
-
-            userData.FirstName = user.FirstName;
-            userData.LastName = user.LastName;
-            userData.Email = user.Email;
-
-
-            if (user != null)
+            // Check if user ID is null or empty
+            if (string.IsNullOrEmpty(id))
             {
-                // user exist and return user object as a response
-                return Ok(userData);
-            }
-            else
-            {
-                return BadRequest("No user found in database");
+                return BadRequest("User ID is null or empty");
             }
 
+            // Check if user exists
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound(); // User not found
+            }
 
+            // Populate UserDTO with user data
+            UserDTO userData = new UserDTO
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                // Map other properties as needed
+            };
+
+            // Return user data
+            return Ok(userData);
         }
+
 
 
         // <summary>

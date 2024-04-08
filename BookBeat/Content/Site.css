@@ -88,6 +88,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    
 }
 
 .track-container {
@@ -221,4 +222,8 @@ label {
 .login-container{
     height: 100vh;
     padding-top: 200px !important;
+}
+
+.btn-go-to-profile{
+    margin: 24px 0px;
 }
