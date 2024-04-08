@@ -1,0 +1,9 @@
+{
+  "Title": "Sample Book",
+  "Author": "John Doe",
+  "Genre": "Fiction",
+  "PublicationYear": 2020,
+  "ISBN": "978-3-16-148410-0",
+  "Description": "This is a sample book description.",
+  "CoverImageURL": "https://example.com/sample-book-cover.jpg"
+}

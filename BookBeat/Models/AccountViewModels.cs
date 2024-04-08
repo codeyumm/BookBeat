@@ -79,6 +79,18 @@ namespace BookBeat.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+
+
     }
 
     public class ResetPasswordViewModel
@@ -109,4 +121,13 @@ namespace BookBeat.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class UserDTO
+    {
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+    }
+
 }

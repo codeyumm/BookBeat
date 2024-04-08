@@ -13,7 +13,7 @@ namespace BookBeat.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202404010046346_first"; }
+            get { return "202404082038223_first"; }
         }
         
         string IMigrationMetadata.Source

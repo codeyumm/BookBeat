@@ -34,13 +34,8 @@ namespace BookBeat.Controllers
 
             // Check if a book with the same details already exists
             var existingBook = db.Books.FirstOrDefault(b =>
-                b.Title == book.Title &&
-                b.Author == book.Author &&
-                b.Genre == book.Genre &&
-                b.PublicationYear == book.PublicationYear &&
-                b.ISBN == book.ISBN &&
-                b.Description == book.Description &&
-                b.CoverImageURL == book.CoverImageURL);
+                b.ISBN == book.ISBN
+                );
 
 
             if (existingBook != null)
@@ -48,11 +43,11 @@ namespace BookBeat.Controllers
                 return Ok(existingBook.BookID);
             }
 
-            if (book.BookID != 0 && db.Books.Any(b => b.BookID == book.BookID))
+          /*  if (book.BookID != 0 && db.Books.Any(b => b.BookID == book.BookID))
             {
                 Debug.WriteLine("******" + book.BookID);
                 return Ok(book.BookID);
-            }
+            } */
 
             // Book doesn't exist, add it to the database
             db.Books.Add(book);

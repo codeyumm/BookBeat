@@ -486,7 +486,7 @@ namespace BookBeat.Controllers
         /// </returns>
         /// 
         /// <example>
-        /// POST: curl -H "Content-Type:application/json" -d @listenLater.json https://localhost:44127/api/tracklistdatax/AddToDiscoveredList
+        /// POST: curl -H "Content-Type:application/json" -d @discoverd.json https://localhost:44127/api/tracklistdatax/AddToDiscoveredList
         /// response: Ok
         /// </example>
 
@@ -495,7 +495,7 @@ namespace BookBeat.Controllers
         // Before adding, we have to check if the song and user exist or not,
         // and if the user already has that song in the discovered list
         // If the song exists and is not in the user's discovered list, add the song to the list.
-
+        
         [HttpPost]
         [Route("api/MediaListData/AddTrackToDiscoveredList/{userId}/{trackId}")]
         public IHttpActionResult AddTrackToDiscoveredList(string userId, int trackId)

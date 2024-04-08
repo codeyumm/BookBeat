@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BookBeat</RootNamespace>
     <AssemblyName>BookBeat</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -182,29 +182,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MediaListController.cs" />
     <Compile Include="Controllers\MediaListDataController.cs" />
     <Compile Include="Controllers\TrackDataController.cs" />
+    <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202403260206142_Register.cs" />
-    <Compile Include="Migrations\202403260206142_Register.Designer.cs">
-      <DependentUpon>202403260206142_Register.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403260253073_aspnetusertable_foriegnkey.cs" />
-    <Compile Include="Migrations\202403260253073_aspnetusertable_foriegnkey.Designer.cs">
-      <DependentUpon>202403260253073_aspnetusertable_foriegnkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202403260318389_fkey.cs" />
-    <Compile Include="Migrations\202403260318389_fkey.Designer.cs">
-      <DependentUpon>202403260318389_fkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404010046346_first.cs" />
-    <Compile Include="Migrations\202404010046346_first.Designer.cs">
-      <DependentUpon>202404010046346_first.cs</DependentUpon>
+    <Compile Include="Migrations\202404082038223_first.cs" />
+    <Compile Include="Migrations\202404082038223_first.Designer.cs">
+      <DependentUpon>202404082038223_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -326,17 +316,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202403260206142_Register.resx">
-      <DependentUpon>202403260206142_Register.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403260253073_aspnetusertable_foriegnkey.resx">
-      <DependentUpon>202403260253073_aspnetusertable_foriegnkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202403260318389_fkey.resx">
-      <DependentUpon>202403260318389_fkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404010046346_first.resx">
-      <DependentUpon>202404010046346_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202404082038223_first.resx">
+      <DependentUpon>202404082038223_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
