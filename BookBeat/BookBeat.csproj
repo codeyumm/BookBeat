@@ -193,9 +193,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202404082038223_first.cs" />
-    <Compile Include="Migrations\202404082038223_first.Designer.cs">
-      <DependentUpon>202404082038223_first.cs</DependentUpon>
+    <Compile Include="Migrations\202404090004426_second.cs" />
+    <Compile Include="Migrations\202404090004426_second.Designer.cs">
+      <DependentUpon>202404090004426_second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404090138228_changed_register_model.cs" />
+    <Compile Include="Migrations\202404090138228_changed_register_model.Designer.cs">
+      <DependentUpon>202404090138228_changed_register_model.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -228,6 +232,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\images\remove.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -319,8 +324,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202404082038223_first.resx">
-      <DependentUpon>202404082038223_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202404090004426_second.resx">
+      <DependentUpon>202404090004426_second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404090138228_changed_register_model.resx">
+      <DependentUpon>202404090138228_changed_register_model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

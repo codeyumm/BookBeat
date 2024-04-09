@@ -35,16 +35,10 @@
     </form>
 
 
-    @if (Model.Tracks == null)
-    {
-        <div class="col-md-6">
-            <h1>You don't have any discovered music tracks</h1>
-        </div>
-    }
-    else
+    @if (Model.Tracks != null && Model.Tracks.Any())
     {
         <div class="col-md-12">
-            <h1>Discovered list of @Model.Tracks.First().UserName (Music)</h1>
+            <h3>Discovered list of @Model.Tracks.First().FirstName (Music)</h3>
             <div class="row flex justify-content-center align-items-center">
                 @foreach (var track in Model.Tracks)
                 {
@@ -56,11 +50,50 @@
                             <p class="card-text">Album: @track.Album</p>
                         </div>
                         <div class="card-footer">
-                            <!-- Form to perform actions on discovered music tracks -->
+
+                            <form method="POST" action="/MediaList/AddToLaterList">
+                                <input type="hidden" name="userId" value="@track.UserID" />
+                                <input type="hidden" name="mediaId" value="@track.TrackID" />
+                                <input type="hidden" name="mediaType" value="track" />
+                                <input type="hidden" name="Title" value="@track.Title" />
+                                <input type="hidden" name="Album" value="@track.Album" />
+                                <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                                <input type="hidden" name="Artist" value="@track.Artist" />
+                                <input class="btn custom-btn" type="submit" value="Listen later" />
+                            </form>
+                            @*   <form method="POST" action="/MediaList/AddToDiscoveredList">
+                                    <input type="hidden" name="userId" value="@track.UserID" />
+                                    <input type="hidden" name="mediaId" value="@track.TrackID" />
+                                    <input type="hidden" name="mediaType" value="track" />
+                                    <input type="hidden" name="Title" value="@track.Title" />
+                                    <input type="hidden" name="Album" value="@track.Album" />
+                                    <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                                    <input type="hidden" name="Artist" value="@track.Artist" />
+                                    <input class="btn custom-btn" type="submit" value="Add To Discovered" />
+                                </form> *@
+
+                            <form method="POST" action="/MediaList/RemoveFromDiscoveredList">
+                                <input type="hidden" name="userId" value="@track.UserID" />
+                                <input type="hidden" name="mediaId" value="@track.TrackID" />
+                                <input type="hidden" name="mediaType" value="track" />
+
+                                <input type="image" src="~/Content/images/remove.png" alt="submit" class="btn-submit-image" title="Remove" />
+                            </form>
+
                         </div>
                     </div>
                 }
             </div>
+
+
+
+        </div>
+    }
+    else
+    {
+
+        <div class="col-md-6">
+            <h1>You don't have any discovered music tracks</h1>
         </div>
     }
 

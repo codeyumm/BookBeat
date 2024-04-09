@@ -41,6 +41,7 @@ namespace BookBeat.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                UserName = user.UserName
                 // Map other properties as needed
             };
 

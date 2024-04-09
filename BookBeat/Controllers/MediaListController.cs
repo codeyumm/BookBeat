@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using System.Threading.Tasks;
 using System.Web.Http.Tracing;
 using BookBeat.Models.ViewModels;
+using System.Web.UI.WebControls;
 
 namespace BookBeat.Controllers
 {
@@ -273,6 +274,7 @@ namespace BookBeat.Controllers
 
 
         // to remove media from listne later list
+       
         [HttpPost]
         public ActionResult RemoveFromLaterList(int mediaId, string mediaType)
         {
@@ -283,20 +285,31 @@ namespace BookBeat.Controllers
             var userId = User.Identity.GetUserId();
 
             string url = "";
-         
+            Debug.WriteLine("hello");
+
+           
+
 
             if (mediaType == "track")
             {
-                url = $"MediaListData/RemoveTrackFromListenLater/{userId}/{mediaId}";
+                url = $"https://localhost:44366/api/MediaListData/RemoveTrackFromListenLater/{userId}/{mediaId}";
               
             }
             else
             {
-                url = $"MediaListData/RemoveBookFromReadLater/{userId}/{mediaId}";
+                url = $"https://localhost:44366/api/MediaListData/RemoveBookFromReadLater/{userId}/{mediaId}";
             }
 
-            
-            HttpResponseMessage response = client.DeleteAsync(url).Result;
+            Debug.WriteLine(url);
+
+
+            // send request on url store result as res
+            HttpContent content = new StringContent("");
+
+            // set request content to json
+            content.Headers.ContentType.MediaType = "application/json";
+
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -309,6 +322,51 @@ namespace BookBeat.Controllers
                 return View("Error");
             }
         }
+
+
+        [HttpPost]
+        public ActionResult RemoveFromDiscoveredList(int mediaId, string mediaType)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+
+            GetApplicationCookie();
+
+            var userId = User.Identity.GetUserId();
+
+            string url = "";
+
+            if (mediaType == "track")
+            {
+                url = $"https://localhost:44366/api/MediaListData/RemoveTrackFromDiscovered/{userId}/{mediaId}";
+            }
+            else
+            {
+                url = $"https://localhost:44366/api/MediaListData/RemoveBookFromDiscovered/{userId}/{mediaId}";
+            }
+
+            // Prepare empty content since it's a POST request
+            HttpContent content = new StringContent("");
+
+            Debug.WriteLine(url);
+
+            // Set content type
+            content.Headers.ContentType.MediaType = "application/json";
+
+            // Send HTTP POST request to remove the item from the discovered list
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Handle successful deletion
+                return RedirectToAction("DiscoveredList");
+            }
+            else
+            {
+                // Handle failure (e.g., display an error view)
+                return View("Error");
+            }
+        }
+
 
 
 

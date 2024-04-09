@@ -34,6 +34,7 @@ body {
 .profile-container {
     width: 100%;
     margin-top: 60px;
+    height: 100vh;
 }
 
 .profile-card {
@@ -226,4 +227,8 @@ label {
 
 .btn-go-to-profile{
     margin: 24px 0px;
+}
+
+.book-section{
+    margin: 32px 0px;
 }

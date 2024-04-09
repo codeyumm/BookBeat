@@ -247,7 +247,7 @@ namespace BookBeat.Controllers
 
         public IHttpActionResult RemoveTrackFromListenLater(string userId, int trackId)
         {
-            Debug.WriteLine("--- removing from list ----");
+            Debug.WriteLine("--- removing track from list ----");
 
             if (!ModelState.IsValid)
             {
@@ -718,7 +718,7 @@ namespace BookBeat.Controllers
         [Route("api/MediaListData/RemoveBookFromDiscovered/{userId}/{bookId}")]
         public IHttpActionResult RemoveBookFromDiscovered(string userId, int bookId)
         {
-            Debug.WriteLine("--- Removing from list ----");
+            Debug.WriteLine("--- Removing track from  discoverd list ----");
 
             if (!ModelState.IsValid)
             {
@@ -732,12 +732,12 @@ namespace BookBeat.Controllers
             MediaList mediaList = db.MediaLists.Where(user => user.UserID == userId)
                                                .Where(book => book.BookID == bookId)
                                                .Where(media => media.MediaType == "book")
-                                               .Where(discovered => discovered.IsAlreadyHeardOrRead)
+                                               .Where(discovered => discovered.IsAlreadyHeardOrRead == true)
                                                .SingleOrDefault();
 
             if (mediaList != null)
             {
-                Debug.WriteLine("Removing from list");
+                Debug.WriteLine("Removing from list got the list");
 
                 // Remove from list
                 db.MediaLists.Remove(mediaList);
