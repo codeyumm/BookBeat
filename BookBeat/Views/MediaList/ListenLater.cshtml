@@ -1,10 +1,13 @@
-﻿@model BookBeat.Models.ViewModels.LaterList
+@model BookBeat.Models.ViewModels.LaterList
 
 @{
     ViewBag.Title = "ListenLater";
     bool? isTrackDeleted = ViewBag.isTrackDeleted;
     bool? isTrackAddedInDiscoverd = ViewBag.isAddedToDiscoverd;
     bool? isAddedToListenLater = ViewBag.isAddedToListenLater;
+    bool? isBookDeleted = ViewBag.isTrackDeleted;
+    bool? isBookAddedInDiscoverd = ViewBag.isAddedToDiscoverd;
+    bool? isBookAddedToListenLater = ViewBag.isAddedToListenLater;
 }
 
 @if (isTrackDeleted == true)
@@ -28,6 +31,27 @@
     </script>
 }
 
+@if (isBookDeleted == true)
+{
+    <script>
+        alert("Book is removed from your list");
+    </script>
+}
+
+@if (isBookAddedInDiscoverd == true)
+{
+    <script>
+        alert("Book is added to your discovered list");
+    </script>
+}
+
+@if (isBookAddedToListenLater == true)
+{
+    <script>
+        alert("Book is added to your listen later list");
+    </script>
+}
+
 <section class="listen-later-list-container">
 
 
@@ -36,10 +60,16 @@
     </form>
 
 
-    @if (Model.Tracks != null && Model.Tracks.Any())
+    @if (Model.Tracks == null)
+    {
+        <div class="col-md-6">
+            <h1>You don't have any music tracks in the listen later list</h1>
+        </div>
+    }
+    else
     {
         <div class="col-md-12">
-            <h3>Listen later list of @Model.Tracks.First().UserName (Music)</h3>
+            <h1>Listen later list of @Model.Tracks.First().UserName (Music)</h1>
             <div class="row flex justify-content-center align-items-center">
                 @foreach (var track in Model.Tracks)
                 {
@@ -51,33 +81,23 @@
                             <p class="card-text">Album: @track.Album</p>
                         </div>
                         <div class="card-footer">
-                            @* <form method="POST" action="/MediaList/AddToLaterList">
-                                    <input type="hidden" name="userId" value="@track.UserID" />
-                                    <input type="hidden" name="mediaId" value="@track.TrackID" />
-                                    <input type="hidden" name="mediaType" value="track" />
-                                    <input type="hidden" name="Title" value="@track.Title" />
-                                    <input type="hidden" name="Album" value="@track.Album" />
-                                    <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
-                                    <input type="hidden" name="Artist" value="@track.Artist" />
-                                    <input class="btn custom-btn" type="submit" value="Listen later" />
-                                </form>*@
-                            <form method="POST" action="/MediaList/AddToDiscoveredList">
+                            <form method="POST" action="/TrackList/AddToListenLater">
                                 <input type="hidden" name="userId" value="@track.UserID" />
-                                <input type="hidden" name="mediaId" value="@track.TrackID" />
-                                <input type="hidden" name="mediaType" value="track" />
+                                <input type="hidden" name="trackId" value="@track.TrackID" />
                                 <input type="hidden" name="Title" value="@track.Title" />
                                 <input type="hidden" name="Album" value="@track.Album" />
                                 <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
                                 <input type="hidden" name="Artist" value="@track.Artist" />
-                                <input class="btn custom-btn" type="submit" value="Add To Discovered" />
+                                <input class="btn custom-btn" type="submit" value="Listen later" />
                             </form>
-
-                            <form method="POST" action="/MediaList/RemoveFromLaterList">
+                            <form method="POST" action="/TrackList/AddToDiscoverdList">
                                 <input type="hidden" name="userId" value="@track.UserID" />
-                                <input type="hidden" name="mediaId" value="@track.TrackID" />
-                                <input type="hidden" name="mediaType" value="track" />
-
-                                <input type="image" src="~/Content/images/remove.png" alt="submit" class="btn-submit-image" title="Remove" />
+                                <input type="hidden" name="trackId" value="@track.TrackID" />
+                                <input type="hidden" name="Title" value="@track.Title" />
+                                <input type="hidden" name="Album" value="@track.Album" />
+                                <input type="hidden" name="AlbumArt" value="@track.AlbumArt" />
+                                <input type="hidden" name="Artist" value="@track.Artist" />
+                                <input class="btn custom-btn" type="submit" value="Discovered" />
                             </form>
                         </div>
                     </div>
@@ -86,30 +106,48 @@
             </div>
         </div>
     }
-    else
-    {
-        <div class="col-md-6">
-            <h3>You don't have any music tracks in the listen later list</h3>
-        </div>
-    }
 
 
     @if (Model.Books == null)
     {
-        <div class="col-md-6 book-section">
-            <h3>You don't have any books in the read later list</h3>
+        <div class="col-md-6">
+            <h1>You don't have any books in the read later list</h1>
         </div>
     }
     else
     {
-        <div class="col-md-6 book-section">
-            <h3>Read later list of @Model.Books.First().UserName (Books)</h3>
+        <div class="col-md-12">
+            <h1>Listen later list of @Model.Books.First().UserName (Book)</h1>
             <div class="row flex justify-content-center align-items-center">
                 @foreach (var book in Model.Books)
                 {
                     <div class="card mx-4 my-4 p-4" style="width: 18rem;">
-                        <!-- Book details -->
+                        <img src="@book.CoverImage" class="card-img-top" alt="Album art">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">Artist: @book.Author</p>
+                            <p class="card-text">Album: @book.Genre</p>
+                        </div>
+                        <div class="card-footer">
+                            <form method="POST" action="/BookList/AddToReadLater">
+                                <input type="hidden" name="userId" value="@book.UserID" />
+                                <input type="hidden" name="bookId" value="@book.BookID" />
+                                <input type="hidden" name="Title" value="@book.Title" />
+                                <input type="hidden" name="Author" value="@book.Author" />
+                                <input type="hidden" name="Genre" value="@book.Genre" />
+                                <input class="btn custom-btn" type="submit" value="Listen later" />
+                            </form>
+                            <form method="POST" action="/BookList/AddToDiscoveredList">
+                                <input type="hidden" name="userId" value="@book.UserID" />
+                                <input type="hidden" name="bookId" value="@book.BookID" />
+                                <input type="hidden" name="Title" value="@book.Title" />
+                                <input type="hidden" name="Author" value="@book.Author" />
+                                <input type="hidden" name="Genre" value="@book.Genre" />
+                                <input class="btn custom-btn" type="submit" value="Discovered" />
+                            </form>
+                        </div>
                     </div>
+
                 }
             </div>
         </div>
