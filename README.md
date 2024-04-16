@@ -30,7 +30,8 @@ The project utilizes a relational database to manage user profiles, reviews, and
 1. **Change Target Framework**:
    - Navigate to `Project > BookBeat Properties`.
    - Change the target framework to `4.7.1`.
-   - Change it back to `4.8`.
+   - Change it back to `4.7.2`.
+   - or Change target framework to 4.8.
 
 2. **Verify App_Data Folder**:
    - Ensure there is an `App_Data` folder in the project.
@@ -60,7 +61,7 @@ The project utilizes a relational database to manage user profiles, reviews, and
   - **Possible Solution:** Project was cloned to a OneDrive or other restricted cloud-based storage. Clone the project repository to the actual drive on the machine.
 
 - **Issue:** (running server) Could not find part to the path ../bin/roslyn/csc.exe
-  - **Solution:** Change target framework to 4.7.1 and back to 4.7.2.
+  - **Solution:** Change target framework to 4.7.1 and back to 4.7.2. or Change target framework to 4.8.
 
 - **Issue:** (running server) Project Failed to build. System.Web.Http does not have reference to serialize...
   - **Solution:** Solution Explorer > References > Add Reference > System.Web.Extensions.
