@@ -1,0 +1,48 @@
+﻿﻿﻿@model PassionProjectBookSwap.Models.BookDto
+
+@{
+    ViewBag.Title = "Create";
+    var UserID = ViewBag.UserID;
+}
+
+
+<div class="col-md-2"><a href="@Url.Action("List", "Genre")" class="btn btn-primary">Back</a></div>
+<p></p>
+<h2>Add Book</h2>
+<form action="/Book/Create" method="POST">
+    <input type="hidden" name="UserID" value="@UserID" />
+   
+    <div>
+        <label>Book Name:</label> <input type="text" name="BookName" />
+    </div>
+    <p></p>
+    <div>
+        <label>Book Author:</label> <input type="text" name="BookAuthor" />
+    </div>
+    <p></p>
+    <div>
+        <label>Book Genre:</label>
+        <select name="GenreID">
+            @foreach (var genre in ViewBag.Genres)
+            {
+                <option value="@genre.GenreID">@genre.GenreName</option>
+            }
+        </select>
+    </div>
+    <p></p>
+    <div>
+        <label>Book Publish Date:</label> <input type="datetime-local" name="BookPublishDate" />
+    </div>
+    <p></p>
+    <div>
+        <label>Book Location:</label> <input type="text" name="BookLocation" />
+    </div>
+    <p></p>
+    <div>
+        <label>Book Caption:</label> <input type="text" name="BookCaption" />
+    </div>
+    <p></p>
+    <div>
+        <input type="submit" class="btn btn-primary" value="Add Book" />
+    </div>
+</form>

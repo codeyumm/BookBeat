@@ -203,6 +203,8 @@ namespace BookBeat.Controllers
                 {
                     BookID = book.BookID,
                     Title = book.Title,
+                    CoverImageURL = book.CoverImageURL,
+                    Author = book.Author
 
                 }); ;
             });

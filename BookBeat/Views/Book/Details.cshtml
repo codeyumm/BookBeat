@@ -1,0 +1,47 @@
+﻿
+@model BookBeat.Models.BookDTO
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+<style>
+    .button-container {
+        display: inline-block;
+    }
+
+    .delete-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 7px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+
+<a href="@Url.Action("List", "Genre")" class="btn btn-primary">Back to Home</a>
+<p></p>
+<form action="/Book/Edit" method="get">
+    <h2>Book Name: @Model.BookName</h2>
+    <div>Book Author: @Model.BookAuthor</div>
+    <div>Book Publish Date: @Model.BookPublishDate</div>
+    <div>Book Location: @Model.BookLocation</div>
+    <div>Book Caption: @Model.BookCaption</div>
+    <input type="hidden" value="@Model.BookID" name="id" />
+    <p></p>
+    <div class="button-container"><input type="submit" value="Edit" class="btn btn-primary" /></div>
+    @*<div class="button-container">
+            <input type="submit" value="Delete" class="delete-button" />
+        </div>*@
+</form>
+<form action="@Url.Action("Delete", "Book")" method="post">
+    <input type="hidden" name="id" value="@Model.BookID" />
+    <input type="submit" value="Delete" class="delete-button" />
+</form>
