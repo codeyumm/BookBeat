@@ -7,13 +7,13 @@ namespace BookBeat.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class changed_register_model : IMigrationMetadata
+    public sealed partial class first : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(changed_register_model));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(first));
         
         string IMigrationMetadata.Id
         {
-            get { return "202404090138228_changed_register_model"; }
+            get { return "202404161914339_first"; }
         }
         
         string IMigrationMetadata.Source

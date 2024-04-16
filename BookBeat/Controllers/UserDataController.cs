@@ -17,6 +17,11 @@ namespace BookBeat.Controllers
         /// get database context/
         public ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        ///  Returns information about user including username, email and name
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>UserDTO object with info</returns>
         [HttpGet]
         [Route("api/UserData/GetProfileInfo/{id}")] // here id is user id
 
