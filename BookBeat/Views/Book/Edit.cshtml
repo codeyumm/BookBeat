@@ -1,0 +1,53 @@
+﻿@model BookBeat.Models.BookDTO
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<a href="@Url.Action("List", "Book")" class="btn btn-primary">Back to Home</a>
+<p></p>
+<h2>Edit Book</h2>
+<form method="POST" action="/Book/Update">
+    <input type="hidden" value="@Model.BookID" name="id" />
+    <input type="hidden" value="@Model.GenreID" name="genreId" />
+
+    <input type="hidden" value="@Model.UserID" name="UserID" />
+
+    <input type="text" style="display:none;" name="BookId" value="@Model.BookID" />
+    <div>
+        <label>Book Name</label>
+        <input type="text" name="BookName" value="@Model.BookName" />
+    </div>
+    <div>
+        <label>Book Author</label>
+        <input type="text" name="BookAuthor" value="@Model.BookAuthor" />
+    </div>
+    @*<div>
+            <label>Book Genre</label>
+            <input type="text" name="BookGenre" value="@Model.BookGenre" />
+        </div>*@
+    <div>
+        <label>Book Publish Date</label>
+        <input type="text" name="BookPublishDate" value="@Model.BookPublishDate" />
+    </div>
+    <div>
+        <label>Book Location</label>
+        <input type="text" name="BookLocation" value="@Model.BookLocation" />
+    </div>
+    <div>
+        <label>Book Caption</label>
+        <input type="text" name="BookCaption" value="@Model.BookCaption" />
+    </div>
+    <p></p>
+    <div>
+        <input type="submit" class="btn btn-primary" value="Update" />
+    </div>
+</form>
+
+<form method="POST" action="/Book/Delete/@Model.BookID">
+    <input type="hidden" value="@Model.BookID" name="id" />
+    <input type="hidden" value="@Model.BookName" name="BookName" />
+
+    <input type="hidden" value="@Model.UserID" name="UserID" />
+
+</form>

@@ -222,6 +222,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BookDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -349,6 +350,12 @@
     <Content Include="Views\MediaList\ListenLater.cshtml" />
     <Content Include="Views\MediaList\DiscoveredList.cshtml" />
     <Content Include="Views\User\DisplayProfile.cshtml" />
+    <Content Include="Views\Book\Delete.cshtml" />
+    <Content Include="Views\Book\Details.cshtml" />
+    <Content Include="Views\Book\Edit.cshtml" />
+    <Content Include="Views\Book\Error.cshtml" />
+    <Content Include="Views\Book\List.cshtml" />
+    <Content Include="Views\Book\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

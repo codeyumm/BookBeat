@@ -1,0 +1,53 @@
+﻿@*@model IEnumerable<PassionProjectBookSwap.Models.BookDto>
+    @{
+        ViewBag.Title = "List";
+    }
+
+    <h2>List</h2>
+    @foreach (var book in Model)
+    {
+        <h2><a href="/Book/Details/@book.BookID">@book.BookName</a></h2>
+        <div>Book Author: @book.BookAuthor</div>
+        <div>Book Genre: @book.BookGenre</div>
+        <div>Book Publish Date: @book.BookPublishDate</div>
+        <div>Book Location: @book.BookLocation</div>
+        <div>Book Caption: @book.BookCaption</div>
+    }*@
+
+@model IEnumerable<BookBeat.Models.BookDTO>
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="col-md-2"><a href="@Url.Action("List", "Genre")" class="btn btn-primary">Back</a></div>
+<div class="container">
+    <h2>List</h2> 
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class="col-md-3">
+                <div class="card mb-3">
+
+                    <div class="card-body">
+                        <img src="@book.CoverImageURL" />
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">Book Author: @book.Author</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <form action="/Book/Delete" method="POST">
+                            <input type="hidden" value="@book.BookID" name="id" />
+                            <input type="submit" value="Delete" />
+                        </form>
+
+                        <form action="/Book/Edit" method="POST">
+                            <input type="hidden" value="@book.BookID" name="id" />
+                            <input type="submit" value="Edit" />
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
