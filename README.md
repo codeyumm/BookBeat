@@ -25,7 +25,7 @@ Book Beat is an ASP.NET project developed over 8 weeks by Saloni Pawar and Priya
 
 The project utilizes a relational database to manage user profiles, reviews, and media lists.
 
-## Running the Project
+## 🏃‍♂️ Running the Project
 
 1. **Change Target Framework**:
    - Navigate to `Project > BookBeat Properties`.
@@ -48,7 +48,7 @@ The project utilizes a relational database to manage user profiles, reviews, and
 5. **Run API Commands via CURL**:
    - Use CURL commands to interact with the API and create new animals.
 
-## Common Issues & Resolutions
+## 🛠️ Common Issues & Resolutions
 
 - **Issue:** (update-database) Could not attach .mdf database
   - **Solution:** Make sure App_Data folder is created.
