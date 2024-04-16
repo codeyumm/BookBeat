@@ -1,4 +1,4 @@
-﻿﻿﻿@model PassionProjectBookSwap.Models.BookDto
+﻿@model BookBeat.Models.Book
 
 @{
     ViewBag.Title = "Create";
@@ -13,33 +13,22 @@
     <input type="hidden" name="UserID" value="@UserID" />
    
     <div>
-        <label>Book Name:</label> <input type="text" name="BookName" />
+        <label>Book Name:</label> <input type="text" name="Title" />
     </div>
     <p></p>
     <div>
-        <label>Book Author:</label> <input type="text" name="BookAuthor" />
+        <label>Book Author:</label> <input type="text" name="Author" />
     </div>
     <p></p>
     <div>
         <label>Book Genre:</label>
-        <select name="GenreID">
-            @foreach (var genre in ViewBag.Genres)
-            {
-                <option value="@genre.GenreID">@genre.GenreName</option>
-            }
-        </select>
+        <label>Book Author:</label> <input type="text" name="Genre" />
     </div>
     <p></p>
+
+
     <div>
-        <label>Book Publish Date:</label> <input type="datetime-local" name="BookPublishDate" />
-    </div>
-    <p></p>
-    <div>
-        <label>Book Location:</label> <input type="text" name="BookLocation" />
-    </div>
-    <p></p>
-    <div>
-        <label>Book Caption:</label> <input type="text" name="BookCaption" />
+        <label>Book Cover URL:</label> <input type="text" name="CoverImageURL" />
     </div>
     <p></p>
     <div>

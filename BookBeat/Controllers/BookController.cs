@@ -95,7 +95,7 @@ namespace BookBeat.Controllers
         }
 
         // GET: Book/New
-        public ActionResult New(int UserID)
+        public ActionResult New()
         {
             // Retrieve list of genres from your data source
            // List<Genre> genres = db.Genres.ToList();
@@ -115,7 +115,7 @@ namespace BookBeat.Controllers
             //Debug.WriteLine(book.BookName);
             //objective: add a new book into our system using the API
             //curl -H "Content-Type:application/json" -d @book.json https://localhost:44324/api/bookdata/addbook
-            string url = "addbook";
+            string url = " https://localhost:44366/api/bookdata/addbook";
 
 
             string jsonpayload = jss.Serialize(book);
@@ -148,7 +148,7 @@ namespace BookBeat.Controllers
             //objective: communicate with our book data api to retrieve one book
             //curl https://localhost:44324/api/bookdata/findbook/{id}
 
-            string url = "findbook/" + id;
+            string url = "https://localhost:44366/api/bookdata/findbook/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             //Debug.WriteLine("The response code is ");
@@ -160,6 +160,7 @@ namespace BookBeat.Controllers
 
             return View(selectedbook);
         }
+
         // POST: Book/Update/5
         [HttpPost]
         public ActionResult Update(int id, Book book)

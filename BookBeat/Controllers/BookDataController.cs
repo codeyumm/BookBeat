@@ -26,22 +26,25 @@ namespace BookBeat.Controllers
 
         public IHttpActionResult AddBook(Book book)
         {
+            Debug.WriteLine("Add book api called");
+
             // if model is not valid
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Invalid model");
                 return BadRequest(ModelState);
             }
 
             // Check if a book with the same details already exists
-            var existingBook = db.Books.FirstOrDefault(b =>
-                b.ISBN == book.ISBN
-                );
+           // var existingBook = db.Books.FirstOrDefault(b =>
+             //   b.ISBN == book.ISBN
+               // );
 
 
-            if (existingBook != null)
-            {
-                return Ok(existingBook.BookID);
-            }
+            //if (existingBook != null)
+            //{
+              //  return Ok(existingBook.BookID);
+            //}
 
           /*  if (book.BookID != 0 && db.Books.Any(b => b.BookID == book.BookID))
             {
@@ -195,11 +198,11 @@ namespace BookBeat.Controllers
 
             List<Book> Books = db.Books.ToList();
 
-            List<BookDTO> BookDtos = new List<BookDTO>();
+            List<BookDTO> BookDTOs = new List<BookDTO>();
             Books.ForEach(book =>
             {
 
-                BookDtos.Add(new BookDTO()
+                BookDTOs.Add(new BookDTO()
                 {
                     BookID = book.BookID,
                     Title = book.Title,
@@ -209,7 +212,41 @@ namespace BookBeat.Controllers
                 }); ;
             });
 
-            return BookDtos;
+            return BookDTOs;
+        }
+
+
+        /// <summary>
+        /// Finds an Book from the Database through an id. Non-Deterministic.
+        /// </summary>
+        /// <param name="id">The Book ID</param>
+        /// <returns>Book object containing information about the Book with a matching ID. Empty Book Object if the ID does not match any Book in the system.</returns>
+        /// <example>api/BookData/FindBook/6 -> {Book Object}</example>
+        /// <example>api/BookData/FindBook/10 -> {Book Object}</example>
+
+        //FindBook
+
+        // GET: api/BookData/FindBook/5
+        [ResponseType(typeof(Book))]
+        [HttpGet]
+        public IHttpActionResult FindBook(int id)
+        {
+            Book Book = db.Books.Find(id);
+            if (Book == null)
+            {
+                return NotFound();
+            }
+
+            BookDTO BookDTO = new BookDTO()
+            {
+                BookID = Book.BookID,
+                Title = Book.Title,
+                Author = Book.Author,
+                CoverImageURL = Book.CoverImageURL
+
+            };
+
+            return Ok(BookDTO);
         }
     }
 }

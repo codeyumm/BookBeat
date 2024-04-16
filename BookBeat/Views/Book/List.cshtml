@@ -27,11 +27,25 @@
         {
             <div class="col-md-3">
                 <div class="card mb-3">
+
                     <div class="card-body">
                         <img src="@book.CoverImageURL" />
                         <h5 class="card-title">@book.Title</h5>
                         <p class="card-text">Book Author: @book.Author</p>
                     </div>
+
+                    <div class="card-footer">
+                        <form action="/Book/Delete" method="POST">
+                            <input type="hidden" value="@book.BookID" name="id" />
+                            <input type="submit" value="Delete" />
+                        </form>
+
+                        <form action="/Book/Edit" method="POST">
+                            <input type="hidden" value="@book.BookID" name="id" />
+                            <input type="submit" value="Edit" />
+                        </form>
+                    </div>
+
                 </div>
             </div>
         }
